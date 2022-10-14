@@ -10,6 +10,9 @@ const notFoundMiddleware = require('./middleware/not-found')
 //db
 const connectDB = require('./db/connect')
 
+//routes
+const advocatesRouter = require('./routes/advocate')
+
 app.use(express.json());
 app.use(cors())
 
@@ -17,6 +20,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!')
     }
 )
+
+app.use('/advocates', advocatesRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
