@@ -12,6 +12,7 @@ const connectDB = require('./db/connect')
 
 //routes
 const advocatesRouter = require('./routes/advocate')
+const companiesRouter = require('./routes/company')
 
 app.use(express.json());
 app.use(cors())
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 )
 
 app.use('/advocates', advocatesRouter)
+app.use('/companies', companiesRouter)
 
 app.use(notFoundMiddleware)
 app.use(errorHandlerMiddleware)
