@@ -3,12 +3,24 @@ const Company = require('../models/company');
 const asyncHandler = require('express-async-handler');
 
 const getAllAdvocates = asyncHandler(async (req, res) => {
+    const pageOptions = {
+        page: parseInt(req.query.page), 
+        limit: parseInt(req.query.limit)
+    }
+    
     if(req.query.query){
-        const advocates = await Advocate.find({name:{"$regex":`${req.query.query}`,"$options":"i" }})
-        res.status(200).json(advocates)
+       await Advocate.find({name:{"$regex":`${req.query.query}`,"$options":"i" }})
+        .skip((pageOptions.page - 1) * pageOptions.limit).limit(pageOptions.limit).exec(function (err, doc) {
+            if(err) { res.status(500).json(err); return; };
+            res.status(200).json(doc);
+        });
+        
     } else {
-        const advocates = await Advocate.find({})
-        res.status(200).json(advocates)
+        const advocates = await Advocate.find({}) .skip((pageOptions.page - 1) * pageOptions.limit).limit(pageOptions.limit).exec(function (err, doc) {
+            if(err) { res.status(500).json(err); return; };
+            res.status(200).json(doc);
+        });
+        
     }
 });
 
