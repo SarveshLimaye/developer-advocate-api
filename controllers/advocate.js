@@ -3,28 +3,34 @@ const Company = require('../models/company');
 const asyncHandler = require('express-async-handler');
 
 const getAllAdvocates = asyncHandler(async (req, res) => {
-    let  idComp
-    let href
-    const advocates = await Advocate.find();
-    const fetchCompany = await Company.find({name : 'Agora'});
- fetchCompany.map(company =>{
-        idComp = String(company._id)
-        href = `http://localhost:5000/companies/${idComp}`
-        console.log(href)
-        console.log(company.logo)
-    });
-    res.status(200).json({ advocates });
+    if(req.query.query){
+        const advocates = await Advocate.find({name:{"$regex":`${req.query.query}`,"$options":"i" }})
+        res.status(200).json(advocates)
+    } else {
+        const advocates = await Advocate.find({})
+        res.status(200).json(advocates)
+    }
 });
 
 const getAdvocateById = asyncHandler(async (req, res) => {
     const advocate = await Advocate.findById(req.params.id);
     if (advocate) {
-        res.status(200).json({ advocate });
+        return res.status(200).json({ advocate });
+    } else {
+       return res.status(404);
+    }
+});
+
+const searchAdvocates = async (req, res) => {
+    const advocates = await Advocate.find({name:{"$regex":`${req.query.name}`,"$options":"i" }});
+    console.log(advocates);
+    if (advocates) {
+        res.status(200).json({ advocates });
     } else {
         res.status(404);
         throw new Error('Advocate not found');
     }
-});
+};
 
 
 
@@ -80,5 +86,6 @@ fetchCompany.map(company =>{
 module.exports = {
     getAllAdvocates,
     getAdvocateById,
-    addAdvocate
+    addAdvocate,
+    searchAdvocates
 }
