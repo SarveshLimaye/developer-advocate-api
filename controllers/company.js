@@ -2,8 +2,14 @@ const Company = require('../models/company');
 const asyncHandler = require('express-async-handler');
 
 const getAllCompanies = asyncHandler(async (req, res) => {
-    const companies = await Company.find().populate('advocates');
-    res.status(200).json({ companies });
+    const pageOptions = {
+        page: parseInt(req.query.page), 
+        limit: parseInt(req.query.limit)
+    }
+    const companies = await Company.find().populate('advocates').skip((pageOptions.page - 1) * pageOptions.limit).limit(pageOptions.limit).exec(function (err, doc) {
+        if(err) { res.status(500).json(err); return; };
+        res.status(200).json(doc);
+    });
 });
 
 const getCompanyById = asyncHandler(async (req, res) => {
