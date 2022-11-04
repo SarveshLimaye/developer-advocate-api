@@ -1,5 +1,4 @@
 const Advocate = require('../models/advocate');
-const Company = require('../models/company');
 const asyncHandler = require('express-async-handler');
 
 const getAllAdvocates = asyncHandler(async (req, res) => {
