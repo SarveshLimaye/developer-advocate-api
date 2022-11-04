@@ -9,8 +9,9 @@
 
 
     "rewrites": [
-      {
-        "src": "/advocates", "method":"GET", "dest": "/advocates"
-      }
-    ]
+        {
+          "source": "/advocates",
+          "destination": "./index.js"
+        }
+      ]
   }
