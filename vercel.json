@@ -10,8 +10,8 @@
 
     "rewrites": [
         {
-          "source": "/advocates",
-          "destination": "./index.js"
+          "source": "/(.*)",
+          "destination": "/advocates"
         }
       ]
   }
