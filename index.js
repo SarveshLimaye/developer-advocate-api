@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cors())
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Hello World! <a href="/advocates">Click here to go to the advocates page</a>')
     }
 )
 
