@@ -6,6 +6,7 @@ const { getAllAdvocates, getAdvocateById ,addAdvocate , deleteAdvocate,getAdvoca
 router.route('/').get(getAllAdvocates);
 router.route('/').post(addAdvocate);
 router.route('/:username').get(getAdvocateByUsername);
+router.route('/id/:id').get(getAdvocateById);
 router.route('/:id').delete(deleteAdvocate);
 
 module.exports = router;
