@@ -9,7 +9,7 @@ const getAllAdvocates = asyncHandler(async (req, res) => {
     }
     
     if(req.query.query){
-       await Advocate.find({name:{"$regex":`${req.query.query}`,"$options":"i" }})
+       await Advocate.find({username:{"$regex":`${req.query.query}`,"$options":"i" }})
         .skip((pageOptions.page - 1) * pageOptions.limit).limit(pageOptions.limit).exec(function (err, doc) {
             if(err) { res.status(500).json(err); return; };
             res.status(200).json(doc);
@@ -30,6 +30,15 @@ const getAdvocateById = asyncHandler(async (req, res) => {
         return res.status(200).json({ advocate });
     } else {
        return res.status(404);
+    }
+});
+
+const getAdvocateByUsername = asyncHandler(async (req, res) => {
+    const advocate = await Advocate.findOne({username: req.params.username});
+    if (advocate) {
+        return res.status(200).json({ advocate });
+    } else {
+         return res.status(404);
     }
 });
 
@@ -90,5 +99,6 @@ module.exports = {
     getAdvocateById,
     addAdvocate,
     searchAdvocates,
-    deleteAdvocate
+    deleteAdvocate,
+    getAdvocateByUsername
 }
