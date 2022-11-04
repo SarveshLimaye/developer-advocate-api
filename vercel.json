@@ -10,8 +10,7 @@
 
     "routes": [
       {
-        "source": "/(.*)",
-        "dest": "/"
+        "src": "/advocates", "method":"GET", "dest": "/advocates"
       }
     ]
   }
