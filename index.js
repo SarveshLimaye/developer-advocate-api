@@ -1,6 +1,4 @@
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config({path: __dirname+'/.env'});
-  }
+require('dotenv').config();
 const path = require('path');
 var cors = require('cors');
 const express = require('express');
