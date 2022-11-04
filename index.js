@@ -1,8 +1,7 @@
-require('dotenv').config();
 if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config({path: __dirname+'/.env'});
   }
-  
+const path = require('path');
 var cors = require('cors');
 const express = require('express');
 const app = express();
@@ -41,5 +40,12 @@ const start = async () => {
         console.log(err)
     }
 }
+
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../frontend', 'build')));
+    app.get('/*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../frontend', 'build', 'index.html'));
+    })
+  }
 
 start();
